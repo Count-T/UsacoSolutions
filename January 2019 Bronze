@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+/*
+ID: countt
+LANG: Java
+TASK: P1 Shell Game
+*/
+public class Main{
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("shell.in"));
+        PrintWriter pw = new PrintWriter(new FileWriter("shell.out"));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int loop = Integer.parseInt(st.nextToken());
+        int[] shellsOne = {1, 0, 0};
+        int[] shellsTwo = {0, 1, 0};
+        int[] shellsThree = {0, 0, 1};
+        int firstScore = 0;
+        int secondScore = 0;
+        int thirdScore = 0;
+        for(int i = 0; i < loop; i++){
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken()) - 1; //Zero indexing subtract by 1
+            int b = Integer.parseInt(st.nextToken()) - 1; //Zero indexing subtract by 1
+            int g = Integer.parseInt(st.nextToken()) - 1 ; //Zero indexing subtract by 1
+            //Starts first shell
+            int temp1 = shellsOne[a];
+            shellsOne[a] = shellsOne[b];
+            shellsOne[b] = temp1;
+            if(shellsOne[g] == 1) firstScore ++;
+            //Starts second shell
+            int temp2 = shellsTwo[a];
+            shellsTwo[a] = shellsTwo[b];
+            shellsTwo[b] = temp2;
+            if(shellsTwo[g] == 1) secondScore ++;
+            //Starts third shell
+            int temp3 = shellsThree[a];
+            shellsThree[a] = shellsThree[b];
+            shellsThree[b] = temp3;
+            if(shellsThree[g] == 1) thirdScore ++;
+        }
+        int answer = Math.max(firstScore, Math.max(secondScore, thirdScore)); //Find the maximum possible score (answer)
+        pw.println(answer);
+        pw.close(); //REMEMBER TO CLOSE THE PRINTWRITER OR ELSE NOTHING GETS PRINTED
+    }
+}
